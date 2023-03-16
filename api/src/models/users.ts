@@ -1,5 +1,4 @@
 import { DataTypes } from "sequelize";
-import { userType } from "../typos";
 
 module.exports = (sequelize: any) => {
   sequelize.define(
@@ -22,23 +21,14 @@ module.exports = (sequelize: any) => {
         allowNull: false
       },
       privilege: {
-        type: DataTypes.ENUM("none", "king"),
+        type: DataTypes.ENUM("none", "seller", "king"),
         defaultValue: "none"
       }
     },
     
     {
       timestamps: false,
-      hooks: {
-        beforeCreate: function(user: userType){
-
-          
-            user.username = user.username.toLowerCase();
-
-            return user;
-
-        }
-    },
+      
     },
     
   );
