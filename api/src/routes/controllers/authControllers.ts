@@ -7,7 +7,7 @@ export const signUp = async (body: userType) => {
   try {
     
     const findUsername = await User.findOne({
-      where: { username: body.username },
+      where: { username: body.username.toLowerCase() },
     });
     
     if (findUsername) {
