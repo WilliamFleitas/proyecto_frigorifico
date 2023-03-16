@@ -4,7 +4,8 @@ import { TokenValidation } from "../libs/validateToken";
 import { profile, signIn, signUp } from "./controllers/authControllers";
 const { createUserValidate, signUserValidate } = require("../validators/userValidator")
 const jwt = require("jsonwebtoken");
-const rolType: string = process.env.ROL_TYPE as string;
+const rolType1: string = process.env.ROL_TYPE1 as string;
+const rolType2: string = process.env.ROL_TYPE2 as string;
 const route = Router();
 
 
@@ -47,7 +48,7 @@ route.post("/signin", signUserValidate, async (req: Request, res: Response) => {
 
 });
 
-route.get("/profile", TokenValidation, checkRoleAuth(rolType), async (req: Request, res: Response) => {
+route.get("/profile", TokenValidation, checkRoleAuth(rolType1, rolType2), async (req: Request, res: Response) => {
 
     
     try {
