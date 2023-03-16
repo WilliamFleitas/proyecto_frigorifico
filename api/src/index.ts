@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-// import routes from "./routes/index";
+import routes from "./routes/index";
 require("dotenv").config();
 
 const { sequelize } = require("./database");
@@ -25,7 +25,7 @@ app.use((_req: Request, res: Response, next: NextFunction) => {
 });
 app.use(express.json()); // transforma la req.body a un objeto
 app.use(morgan("dev"));
-// app.use("/", routes);
+app.use("/", routes);
 //acordarse de poner el force true
 sequelize
   .sync({force: true})
