@@ -8,10 +8,9 @@ const rolType: string = process.env.ROL_TYPE as string;
 const route = Router();
 
 
-
-route.post("/signup", createUserValidate, async (req: Request, res: Response) => {
-    const { body } = req;
-    
+// 
+route.post("/signup", createUserValidate , async (req: Request, res: Response) => {
+    const  body  = req.body;
     try {
         const result = await signUp(body);
         const id = result.id.toString();
