@@ -8,7 +8,8 @@ const validateResult = (req: Request, res: Response, next: NextFunction) => {
         validationResult(req).throw()
         return next()
     } catch (error: any) {
-        res.status(403).send({errors: error.array()})
+        console.log(error)
+        res.status(403).send({errors: error.array({ onlyFirstError: true })})
     }
 }; 
 

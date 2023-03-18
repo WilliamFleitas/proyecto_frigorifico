@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Login } from "./components/admin/Login";
+import { Dashboard } from "./components/home/Dashboard";
 
 
   
@@ -11,13 +12,13 @@ function App() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center content-center">
+    <div className="flex flex-col items-center justify-center content-center text-white">
       
       <Routes>
         
         <Route index element={<Login />} />
-        <Route path="/home" element={<Login/>} />
-
+        <Route path="/login" element={<Login/>} />
+        <Route path="/dashboard" element={<Dashboard />} />
         
 
         <Route path="*" element={<>NOT FOUND</>} />
