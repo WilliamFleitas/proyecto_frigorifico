@@ -7,7 +7,7 @@ const {User} = require("../database");
 
 
 const createUserValidate = [
-    check('username').exists().not().isEmpty().withMessage('Falta username'),
+    check('username').exists().not().isEmpty().withMessage('Minimo 5+ caracteres de longitud').isLength({ min: 5 }),
     check('password' , 'Minimo 8+ caracteres de longitud y contener por lo menos un numero').exists().not().isEmpty().withMessage('Falta password').not()
     .isIn(['123', 'password', 'god', 'asdasd'])
     .withMessage('No usar palabras comunes como contraseña')
@@ -24,7 +24,7 @@ const signUserValidate = [
             where: { username: value},
           }).then( (user: userType): any => {
             if (!user) {
-              return Promise.reject('No se encontre el usuario');
+              return Promise.reject('No se encontro el usuario');
             }
           });
         }),

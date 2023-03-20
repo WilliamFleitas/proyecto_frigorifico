@@ -1,34 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Login } from "./components/admin/Login";
+import { Dashboard } from "./components/home/Dashboard";
+import { AdminDashboard } from "./components/admin/AdminDashboard";
+import Protected from "./components/admin/functions/Protected";
+import { getUserData } from "./redux/userSlice/userAction";
+import { useAppDispatch, useAppSelector } from "./hooks";
+import ProtectedAdmin from "./components/admin/functions/ProtectedAdmin";
 
+
+  
 function App() {
-  const [count, setCount] = useState(0)
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+  const session = JSON.parse(
+    window.localStorage.getItem("userSession") as string
+  );
+  const { username } = useAppSelector((state) => state.user.user);
+console.log(location.pathname)
+useEffect(() => {
+    if (session) {
+      dispatch(getUserData());
+    }
+  }, []);
 
+  useEffect(() => {
+    if(location.pathname === "/" || location.pathname === "/login"){
+        document.body.style.backgroundColor = "#CB9406";
+    }
+    else{
+      document.body.style.backgroundColor = "#4A4646";
+    }
+}, [location])
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="flex flex-col items-center justify-center content-center text-white h-screen">
+      
+      <Routes>
+        
+        <Route index element={username ? <Navigate to="/dashboard" /> : <Login/>} />
+        <Route path="/login" element={username ? <Navigate to="/dashboard" /> : <Login/>} />
+
+
+        <Route path="/dashboard" element={
+        <Protected>
+        <Dashboard />
+        </Protected>} />
+
+        <Route path="/admin/dashboard" element={
+          <ProtectedAdmin>
+        <AdminDashboard/>
+          </ProtectedAdmin>
+        } />
+
+        <Route path="*" element={<>NOT FOUND</>} />
+      </Routes>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
