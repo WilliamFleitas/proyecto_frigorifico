@@ -9,6 +9,7 @@ export interface IUserType {
 export interface UserStateType {
     user: IUserType;
     loading: Boolean;
+    userRoll: string;
 };
 
 const initialState: UserStateType = {
@@ -18,6 +19,7 @@ const initialState: UserStateType = {
       privilege: ""
     },
     loading: false,
+    userRoll: "",
 };
 
 const UserSlice = createSlice({
@@ -38,9 +40,15 @@ const UserSlice = createSlice({
         },
         setLoadingUser(state, action: PayloadAction<Boolean>){
             state.loading = action.payload
+        },
+        userRoll(state, action: PayloadAction<string>){
+            state.userRoll = action.payload
+        },
+        clearUserRoll(state){
+            state.userRoll = ""
         }
     }
 });
 
 export default UserSlice.reducer;
-export const {setDataUser, clearDataUser, setLoadingUser}= UserSlice.actions;
+export const {setDataUser, clearDataUser, setLoadingUser, userRoll, clearUserRoll}= UserSlice.actions;

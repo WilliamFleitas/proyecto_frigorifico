@@ -4,11 +4,13 @@ import { useAppDispatch } from "../../../hooks";
 import { setUserRoll } from "../../../redux/userSlice/userAction";
 import { getUserCall } from "./getUsersCall";
 
+
 interface IProtectedProps {
   children: JSX.Element;
 }
 
-const Protected = ({ children }: IProtectedProps) => {
+const ProtectedAdmin = ({ children }: IProtectedProps) => {
+  const roll1 = (import.meta.env.VITE_PRIVILEGE_ROL1 as string);
     const dispatch = useAppDispatch();
   const [display, setDisplay] = useState(false);
   const navigate = useNavigate();
@@ -20,8 +22,17 @@ const Protected = ({ children }: IProtectedProps) => {
         getUserCall()
         .then(({data}) => {
             console.log("datagetuser", data);
-                dispatch(setUserRoll(data.privilege))
-                setDisplay(true);
+            if(data.privilege !== roll1){
+              setDisplay(false);
+              localStorage.removeItem("userSession");
+              alert("Acceso denegado por permisos")
+              navigate("/");
+            }
+            else {
+              dispatch(setUserRoll(data.privilege))
+              setDisplay(true);
+            }
+               
         })
         .catch((error) => {
           localStorage.removeItem("userSession");
@@ -37,4 +48,4 @@ const Protected = ({ children }: IProtectedProps) => {
   return <>{display ? children : <h1>Cargando..</h1> }</>;
 };
 
-export default Protected;
+export default ProtectedAdmin;

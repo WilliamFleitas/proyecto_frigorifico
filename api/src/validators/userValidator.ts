@@ -24,7 +24,7 @@ const signUserValidate = [
             where: { username: value},
           }).then( (user: userType): any => {
             if (!user) {
-              return Promise.reject('No se encontre el usuario');
+              return Promise.reject('No se encontro el usuario');
             }
           });
         }),

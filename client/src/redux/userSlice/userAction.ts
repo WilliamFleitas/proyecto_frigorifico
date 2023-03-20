@@ -1,5 +1,5 @@
 import axios from "axios";
-import { clearDataUser, setDataUser, setLoadingUser} from ".";
+import { clearDataUser, clearUserRoll, setDataUser, setLoadingUser, userRoll} from ".";
 import { AppDispatch } from "../../store";
 
 const BackUrl = (import.meta.env.VITE_BACK_URL as string);
@@ -16,6 +16,7 @@ export const getUserData = () => (dispatch : AppDispatch) => {
                 "auth-token":`${session}`
             },
         }).then(({data}) => {
+            
             dispatch(setDataUser({username: data.username, id: data.id, privilege: data.privilege,}))
         }).catch((e: any) => {
             localStorage.removeItem("userSession");
@@ -26,3 +27,8 @@ export const getUserData = () => (dispatch : AppDispatch) => {
     }
     
 };
+
+export const setUserRoll = (roll: string) => (dispatch : AppDispatch) => {
+    dispatch(clearUserRoll());
+    dispatch(userRoll(roll));
+}
