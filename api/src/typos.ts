@@ -6,11 +6,12 @@ export interface userType {
 }
 
 export interface productType {
-    productName: string,
-    price: number,
+    id: string;
+    productName: string;
+    price: number;
  }
 
-interface productFactureType {
+export interface productFactureType {
    productName: string,
    price: number,
    kilograms: number,

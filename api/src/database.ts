@@ -33,8 +33,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // // const { Reservation, Room} = sequelize.models;
 
-sequelize?.models?.Invoice.belongsToMany(sequelize?.models?.Product, { through : "invoice_product"});
-sequelize?.models?.Product.belongsToMany(sequelize?.models?.Invoice, { through : "invoice_product"});
+sequelize?.models?.Invoice.belongsToMany(sequelize?.models?.Product, {through: sequelize?.models?.InvoiceDetail});
+sequelize?.models?.Product.belongsToMany(sequelize?.models?.Invoice, {through: sequelize?.models?.InvoiceDetail});
 
 module.exports = {
   sequelize,
